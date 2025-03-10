@@ -1,0 +1,91 @@
+<div class="post-container" *ngIf="postInfo" [formGroup]="postForm">
+  <!-- Título y Botón de Edición -->
+  <div class="post-header">
+    <ng-container *ngIf="edition; else viewMode">
+      <!-- <input type="text" [(ngModel)]="post.title" class="title-input"> -->
+      <input type="text" pInputText formControlName="title" />
+    </ng-container>
+    <ng-template #viewMode>
+      <h2>{{ postInfo.title }}</h2>
+    </ng-template>
+
+    <button
+      pButton
+      icon="pi pi-pencil"
+      (click)="editar()"
+      class="edit-btn"
+    ></button>
+  </div>
+
+  <!-- Texto del Post -->
+  <div class="post-content">
+    <ng-container *ngIf="edition; else viewText">
+      <!-- <textarea [(ngModel)]="post.text" class="text-input"></textarea> -->
+      <textarea
+        rows="5"
+        cols="30"
+        id="caption"
+        pTextarea
+        [autoResize]="true"
+        formControlName="caption"
+      ></textarea>
+      <label for="caption">Cuerpo del post</label>
+    </ng-container>
+    <ng-template #viewText>
+      <p>{{ postInfo.caption }}</p>
+    </ng-template>
+  </div>
+
+  <!-- Categorías -->
+  <div class="post-content">
+    <!-- <ng-container *ngIf="edition; else viewText">
+      <textarea [formControl]="postForm.get('text')" class="text-input"></textarea>
+    </ng-container> -->
+    <ng-template #viewText>
+      <p>{{ postInfo.categories }}</p>
+    </ng-template>
+  </div>
+
+  <!-- Sección de Comentarios -->
+  <div class="post-comments">
+    <h3>Comentarios</h3>
+    <ul>
+      <li *ngFor="let comment of commentsList">
+        {{ comment.comment }}
+      </li>
+    </ul>
+
+    <!-- Botón para añadir comentario -->
+    <button
+      pButton
+      label="Agregar Comentario"
+      (click)="isAddingComment = true"
+      *ngIf="!isAddingComment"
+    ></button>
+
+    <!-- Campo de nuevo comentario -->
+    <div *ngIf="isAddingComment" class="new-comment">
+      <textarea
+        rows="5"
+        cols="30"
+        id="comment"
+        pTextarea
+        [autoResize]="true"
+        formControlName="comment"
+      ></textarea>
+      <label for="comment">Escriba un comentario...</label>
+      <button
+        pButton
+        label="Guardar"
+        (click)="guardarComentario()"
+        class="save-btn"
+      ></button>
+      <button
+        pButton
+        label="Cancelar"
+        (click)="cancelComment()"
+        class="cancel-btn"
+      ></button>
+    </div>
+  </div>
+</div>

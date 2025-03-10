@@ -1,0 +1,76 @@
+<div>
+  <div card flex justify-center>
+    <p-dialog
+      header="Detalles del Post"
+      [modal]="true"
+      [(visible)]="showDetails"
+      [style]="{ width: '75%' }"
+    >
+      <blog-detail-card [postInfo]="selectedPost"></blog-detail-card>
+    </p-dialog>
+  </div>
+  <div class="card">
+    <p-dataview #dv [value]="postArray" [rows]="10" [paginator]="true">
+      <ng-template #list let-items>
+        <div class="col-span-12" *ngFor="let item of items; let first = first">
+          <p-card header="{{ item.title }}" class="flex flex-column">
+            <!-- <img [src]="item.image" /> -->
+            <h3>{{ item.caption }}</h3>
+            <p-button
+              icon="pi pi-info-circle"
+              pTooltip="Comentar"
+              tooltipPosition="top"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="showPostDetails(item.postId)"
+            >
+            </p-button>
+          </p-card>
+        </div>
+
+        <!-- <div class="grid grid-cols-12 gap-4 grid-nogutter">
+          <div
+            class="col-span-12"
+            *ngFor="let item of items; let first = first"
+          >
+            <div
+              class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+              [ngClass]="{
+                'border-t border-surface-200 dark:border-surface-700': !first
+              }"
+            >
+              <div class="md:w-40 relative">
+                <img
+                  *ngIf="item.image; lenght"
+                  class="block xl:block mx-auto rounded-border w-full"
+                  [src]="
+                    'https://primefaces.org/cdn/primeng/images/demo/product/' +
+                    item.image
+                  "
+                />
+              </div>
+              <div
+                class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
+              >
+                <div
+                  class="flex flex-row md:flex-col justify-between items-start gap-2"
+                >
+                  <div>
+                    <span class="font-medium text-secondary text-sm">{{
+                      item.tittle
+                    }}</span>
+                    <div
+                      class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2"
+                    >
+                      {{ item.caption }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </ng-template>
+    </p-dataview>
+  </div>
+</div>
