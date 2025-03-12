@@ -1,15 +1,29 @@
 <div class="post-container" *ngIf="postInfo" [formGroup]="postForm">
-  <!-- Título y Botón de Edición -->
   <div class="post-header">
     <ng-container *ngIf="edition; else viewMode">
       <!-- <input type="text" [(ngModel)]="post.title" class="title-input"> -->
       <input type="text" pInputText formControlName="title" />
+      <button
+        pButton
+        label="Save"
+        icon="pi pi-check"
+        (click)="updatePost()"
+        class="save-btn"
+      ></button>
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        (click)="cancelEdit()"
+        class="cancel-btn"
+      ></button>
     </ng-container>
     <ng-template #viewMode>
       <h2>{{ postInfo.title }}</h2>
     </ng-template>
 
     <button
+      *ngIf="!edition"
       pButton
       icon="pi pi-pencil"
       (click)="editar()"
@@ -17,7 +31,6 @@
     ></button>
   </div>
 
-  <!-- Texto del Post -->
   <div class="post-content">
     <ng-container *ngIf="edition; else viewText">
       <!-- <textarea [(ngModel)]="post.text" class="text-input"></textarea> -->
@@ -36,7 +49,6 @@
     </ng-template>
   </div>
 
-  <!-- Categorías -->
   <div class="post-content">
     <!-- <ng-container *ngIf="edition; else viewText">
       <textarea [formControl]="postForm.get('text')" class="text-input"></textarea>
@@ -46,7 +58,6 @@
     </ng-template>
   </div>
 
-  <!-- Sección de Comentarios -->
   <div class="post-comments">
     <h3>Comentarios</h3>
     <ul>
@@ -55,7 +66,6 @@
       </li>
     </ul>
 
-    <!-- Botón para añadir comentario -->
     <button
       pButton
       label="Agregar Comentario"
@@ -63,7 +73,6 @@
       *ngIf="!isAddingComment"
     ></button>
 
-    <!-- Campo de nuevo comentario -->
     <div *ngIf="isAddingComment" class="new-comment">
       <textarea
         rows="5"
